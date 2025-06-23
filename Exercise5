@@ -1,0 +1,45 @@
+// VGA interface
+interface VGA {
+    void connectVGA();
+}
+
+// HDMI class
+class HDMI {
+    public void connectHDMI() {
+        System.out.println("Connected using HDMI port.");
+    }
+}
+
+// Monitor class that only understands VGA
+class Monitor implements VGA {
+    @Override
+    public void connectVGA() {
+        System.out.println("Monitor connected via VGA interface.");
+    }
+}
+
+// VGA to HDMI Adapter class
+class VGAtoHDMI extends HDMI implements VGA {
+    @Override
+    public void connectVGA() {
+        System.out.println("Using VGA to HDMI adapter...");
+        connectHDMI(); // Calls the HDMI method
+    }
+}
+
+// Main class to test the adapter
+public class Main {
+    public static void main(String[] args) {
+        // Monitor with VGA
+        Monitor monitor = new Monitor();
+        System.out.println("Connecting monitor directly:");
+        monitor.connectVGA();
+
+        System.out.println();
+
+        // PC only has HDMI, so we use an adapter
+        VGA adapter = new VGAtoHDMI();  // Acts like a VGA device but actually uses HDMI
+        System.out.println("Connecting VGA monitor to HDMI-only PC:");
+        adapter.connectVGA();
+    }
+}
